@@ -1,4 +1,4 @@
-package com.alfascompany.qonline.ui.gwt.shared;
+package com.alfascompany.qonline.gwt.shared;
 
 /**
  * <p>

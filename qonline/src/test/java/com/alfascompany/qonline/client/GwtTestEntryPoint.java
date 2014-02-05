@@ -1,8 +1,8 @@
 package com.alfascompany.qonline.client;
 
-import com.alfascompany.qonline.ui.gwt.client.GreetingService;
-import com.alfascompany.qonline.ui.gwt.client.GreetingServiceAsync;
-import com.alfascompany.qonline.ui.gwt.shared.FieldVerifier;
+import com.alfascompany.qonline.gwt.client.GreetingService;
+import com.alfascompany.qonline.gwt.client.GreetingServiceAsync;
+import com.alfascompany.qonline.gwt.shared.FieldVerifier;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;

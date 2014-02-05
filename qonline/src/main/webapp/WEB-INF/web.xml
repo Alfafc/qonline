@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.alfascompany.qonline.ui.gwt.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>com.alfascompany.qonline.gwt.server.GreetingServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>

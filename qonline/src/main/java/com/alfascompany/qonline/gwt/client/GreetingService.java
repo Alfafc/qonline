@@ -1,4 +1,4 @@
-package com.alfascompany.qonline.ui.gwt.client;
+package com.alfascompany.qonline.gwt.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

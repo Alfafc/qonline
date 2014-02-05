@@ -1,7 +1,7 @@
-package com.alfascompany.qonline.ui.gwt.server;
+package com.alfascompany.qonline.gwt.server;
 
-import com.alfascompany.qonline.ui.gwt.client.GreetingService;
-import com.alfascompany.qonline.ui.gwt.shared.FieldVerifier;
+import com.alfascompany.qonline.gwt.client.GreetingService;
+import com.alfascompany.qonline.gwt.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
