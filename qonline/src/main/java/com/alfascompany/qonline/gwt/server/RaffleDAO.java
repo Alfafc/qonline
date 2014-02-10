@@ -1,7 +1,8 @@
 package com.alfascompany.qonline.gwt.server;
 
 import com.alfascompany.persistence.GenericDAO;
-import com.alfascompany.qonline.gwt.shared.Raffle;
+import com.alfascompany.persistence.PersistenceEntity;
+import com.alfascompany.qonline.bean.Raffle;
 
 public class RaffleDAO extends GenericDAO<Raffle> {
 
@@ -11,13 +12,13 @@ public class RaffleDAO extends GenericDAO<Raffle> {
 	}
 
 	@Override
-	public void save(Raffle entity) {
+	protected void saveImpl(final PersistenceEntity<Raffle> entity) {
 
 	}
 
-	private Raffle getFakeRaffle(String id) {
+	@Deprecated
+	private Raffle getFakeRaffle(final String id) {
 		final Raffle raffle = new Raffle();
-		raffle.setId(id);
 		raffle.setName("Name");
 		raffle.setPercentageProfit(10f);
 		return raffle;

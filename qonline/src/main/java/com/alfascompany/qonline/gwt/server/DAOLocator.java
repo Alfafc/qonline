@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alfascompany.persistence.AbstractDAO;
-import com.alfascompany.persistence.GenericDAO;
 
 public class DAOLocator {
 
@@ -27,6 +26,7 @@ public class DAOLocator {
 		register(UserDAO.class, new UserDAO());
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getDAO(final Class<T> DAOClass) {
 
 		return (T) DAOsMap.get(DAOClass.getName());

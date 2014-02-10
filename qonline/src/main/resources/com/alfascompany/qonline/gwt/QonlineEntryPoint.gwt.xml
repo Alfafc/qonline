@@ -17,6 +17,8 @@
 	<!-- Other module inherits -->
 	<inherits name='com.alfascompany.Persistence' />
 	<inherits name='com.alfascompany.Utils' />
+	<inherits name='com.alfascompany.qonline.Bean' />
+	<inherits name='com.alfascompany.UI' />
 
 	<!-- Specify the app entry point class. -->
 	<entry-point class='com.alfascompany.qonline.gwt.client.QonlineEntryPoint' />

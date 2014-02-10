@@ -1,8 +1,13 @@
-package com.alfascompany.qonline.gwt.shared;
+package com.alfascompany.qonline.bean;
 
+import java.io.Serializable;
+
+import com.alfascompany.persistence.NotValidEntityException;
 import com.alfascompany.persistence.PersistenceEntity;
 
-public class User extends PersistenceEntity {
+public class User extends PersistenceEntity<User> implements Serializable {
+
+	private static final long serialVersionUID = 5435777658240099076L;
 
 	private String name;
 	private String passwordHash;
@@ -23,4 +28,8 @@ public class User extends PersistenceEntity {
 		this.passwordHash = passwordHash;
 	}
 
+	@Override
+	public void validate() throws NotValidEntityException {
+
+	}
 }

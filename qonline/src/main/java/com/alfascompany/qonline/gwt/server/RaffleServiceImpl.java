@@ -1,26 +1,23 @@
 package com.alfascompany.qonline.gwt.server;
 
+import com.alfascompany.qonline.bean.Raffle;
+import com.alfascompany.qonline.bean.VOID;
 import com.alfascompany.qonline.gwt.client.RaffleService;
-import com.alfascompany.qonline.gwt.shared.Raffle;
-import com.alfascompany.qonline.gwt.shared.User;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+@RemoteServiceRelativePath("/qonline/raffle")
 public class RaffleServiceImpl extends RemoteServiceServlet implements RaffleService {
 
 	private static final long serialVersionUID = -4214505413727960522L;
 
-	public Raffle createRaffle(final User user, final String name, final float percentageProfit) {
-
-		final Raffle raffle = new Raffle();
-		raffle.setName(name);
-		raffle.setPercentageProfit(percentageProfit);
+	public VOID createRaffle(final Raffle raffle) throws Exception {
 
 		DAOLocator.instance().getDAO(RaffleDAO.class).save(raffle);
-
-		return raffle;
+		return new VOID("SIIII SERVIDOR");
 	}
 
-	public Raffle getRaffle(String id) {
+	public Raffle getRaffle(final String id) {
 
 		return DAOLocator.instance().getDAO(RaffleDAO.class).getById(id);
 	}

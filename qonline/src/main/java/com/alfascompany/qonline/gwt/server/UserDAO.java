@@ -1,7 +1,8 @@
 package com.alfascompany.qonline.gwt.server;
 
 import com.alfascompany.persistence.GenericDAO;
-import com.alfascompany.qonline.gwt.shared.User;
+import com.alfascompany.persistence.PersistenceEntity;
+import com.alfascompany.qonline.bean.User;
 
 public class UserDAO extends GenericDAO<User> {
 
@@ -12,15 +13,14 @@ public class UserDAO extends GenericDAO<User> {
 	}
 
 	@Override
-	public void save(final User entity) {
+	protected void saveImpl(final PersistenceEntity<User> entity) {
+
 	}
 
 	private User getFakeUser(final String id) {
 		final User user = new User();
-		user.setId(id);
 		user.setName("Fernando");
 		user.setPasswordHash("pass");
 		return user;
 	}
-
 }

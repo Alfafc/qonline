@@ -2,7 +2,7 @@ package com.alfascompany.persistence;
 
 import com.alfascompany.utils.TimeUtils;
 
-public class PersistenceEntity {
+public abstract class PersistenceEntity<T> {
 
 	public static final String DATE_FORMAT = "yyMMddHHmmssSSS";
 	private String id;
@@ -12,10 +12,6 @@ public class PersistenceEntity {
 		return id;
 	}
 
-	public void setId(final String id) {
-		this.id = id;
-	}
-
 	public String getLastModifiedDate() {
 		return lastModifiedDate;
 	}
@@ -23,4 +19,6 @@ public class PersistenceEntity {
 	public void setLastModifiedDate() {
 		this.lastModifiedDate = TimeUtils.getCurrentTimeString();
 	}
+
+	public abstract void validate() throws NotValidEntityException;
 }
