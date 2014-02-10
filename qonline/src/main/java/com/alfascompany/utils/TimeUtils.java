@@ -9,6 +9,7 @@ import com.alfascompany.persistence.PersistenceEntity;
 public class TimeUtils {
 
 	public static final String DATE_FORMAT = "yyMMddHHmmssSSS";
+	private static final long MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
 
 	public static String getCurrentTimeString() {
 
@@ -19,5 +20,17 @@ public class TimeUtils {
 		strinBuilder.append(simpleDateFormat.format(new Date()));
 
 		return strinBuilder.toString();
+	}
+
+	public static boolean between(final Date date, final int deltaFromDays, final int DeltaToDays) {
+
+		return TimeUtils.between(date, new Date(), deltaFromDays, DeltaToDays);
+	}
+
+	public static boolean between(final Date date, final Date dateBetween, final int deltaFromDays, final int DeltaToDays) {
+
+		final int days = (int) ((dateBetween.getTime() - date.getTime()) / MILLIS_IN_DAY);
+
+		return days >= deltaFromDays && days <= DeltaToDays;
 	}
 }

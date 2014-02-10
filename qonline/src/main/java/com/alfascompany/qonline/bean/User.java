@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.alfascompany.persistence.NotValidEntityException;
 import com.alfascompany.persistence.PersistenceEntity;
+import com.alfascompany.ui.AppStrings;
+import com.alfascompany.utils.StringUtils;
 
 public class User extends PersistenceEntity<User> implements Serializable {
 
@@ -30,6 +32,9 @@ public class User extends PersistenceEntity<User> implements Serializable {
 
 	@Override
 	public void validate() throws NotValidEntityException {
-
+		if (StringUtils.isNull(name))
+			throw new NotValidEntityException(AppStrings.messages.userNameCannotBeEmpty());
+		if (StringUtils.isNull(name))
+			throw new NotValidEntityException(AppStrings.messages.userPasswordCannotBeEmpty());
 	}
 }

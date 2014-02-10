@@ -11,7 +11,7 @@ public abstract class RaffleView extends AbstractEntityView<Raffle> {
 
 	private TextBox idTextBox;
 	private TextBox nameTextBox;
-	private TextBox percentageProfitTextBox;
+	private TextBox profitPercentageTextBox;
 	private Button createRaffleButton;
 
 	private final RaffleServiceAsync raffleService = GWT.create(RaffleService.class);
@@ -29,14 +29,14 @@ public abstract class RaffleView extends AbstractEntityView<Raffle> {
 	protected void bindControlsToEntity(final Raffle entity) {
 
 		entity.setName(getIdTextBox().getText());
-		entity.setPercentageProfit(Long.valueOf(getPercentageProfitTextBox().getText()));
+		entity.setProfitPercentage(Long.valueOf(getProfitPercentageTextBox().getText()));
 	}
 
 	@Override
 	protected void bindEntityToControls(final Raffle entity) {
 		getIdTextBox().setText(entity.getId());
 		getNameTextBox().setText(entity.getName());
-		getPercentageProfitTextBox().setText(entity.getPercentageProfit() + "%");
+		getProfitPercentageTextBox().setText(entity.getProfitPercentage() + "%");
 	}
 
 	public Button getCreateRaffleButton() {
@@ -45,11 +45,11 @@ public abstract class RaffleView extends AbstractEntityView<Raffle> {
 		return createRaffleButton;
 	}
 
-	public TextBox getPercentageProfitTextBox() {
+	public TextBox getProfitPercentageTextBox() {
 
-		if (percentageProfitTextBox == null)
-			percentageProfitTextBox = GUIFactory.createTextBox(messages.percentageProfit());
-		return percentageProfitTextBox;
+		if (profitPercentageTextBox == null)
+			profitPercentageTextBox = GUIFactory.createTextBox(messages.profitPercentage());
+		return profitPercentageTextBox;
 	}
 
 	public TextBox getIdTextBox() {

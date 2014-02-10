@@ -10,16 +10,21 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class RaffleServiceImpl extends RemoteServiceServlet implements RaffleService {
 
 	private static final long serialVersionUID = -4214505413727960522L;
+	private final RaffleDAO dao;
+
+	public RaffleServiceImpl() {
+		dao = DAOLocator.instance().getDAO(RaffleDAO.class);
+	}
 
 	public VOID createRaffle(final Raffle raffle) throws Exception {
 
-		DAOLocator.instance().getDAO(RaffleDAO.class).save(raffle);
-		return new VOID("SIIII SERVIDOR");
+		dao.save(raffle);
+		return VOID.value;
 	}
 
 	public Raffle getRaffle(final String id) {
 
-		return DAOLocator.instance().getDAO(RaffleDAO.class).getById(id);
+		return dao.getById(id);
 	}
 
 }

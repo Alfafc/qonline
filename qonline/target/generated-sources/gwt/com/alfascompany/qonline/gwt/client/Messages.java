@@ -25,6 +25,15 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String createRaffle();
 
   /**
+   * Translated "Raffle end date must be between 10 and 40 days.".
+   * 
+   * @return translated "Raffle end date must be between 10 and 40 days."
+   */
+  @DefaultMessage("Raffle end date must be between 10 and 40 days.")
+  @Key("endDateMustBe")
+  String endDateMustBe();
+
+  /**
    * Translated "Id".
    * 
    * @return translated "Id"
@@ -43,13 +52,40 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String name();
 
   /**
-   * Translated "Percentage Profit".
+   * Translated "Name cannot be empty.".
    * 
-   * @return translated "Percentage Profit"
+   * @return translated "Name cannot be empty."
    */
-  @DefaultMessage("Percentage Profit")
-  @Key("percentageProfit")
-  String percentageProfit();
+  @DefaultMessage("Name cannot be empty.")
+  @Key("nameCannotBeEmpty")
+  String nameCannotBeEmpty();
+
+  /**
+   * Translated "Prize Percentage".
+   * 
+   * @return translated "Prize Percentage"
+   */
+  @DefaultMessage("Prize Percentage")
+  @Key("prizePercentage")
+  String prizePercentage();
+
+  /**
+   * Translated "Profit Percentage".
+   * 
+   * @return translated "Profit Percentage"
+   */
+  @DefaultMessage("Profit Percentage")
+  @Key("profitPercentage")
+  String profitPercentage();
+
+  /**
+   * Translated "Profit percetange must be greater than 0% and less than 37%.".
+   * 
+   * @return translated "Profit percetange must be greater than 0% and less than 37%."
+   */
+  @DefaultMessage("Profit percetange must be greater than 0% and less than 37%.")
+  @Key("profitPercentageMustBe")
+  String profitPercentageMustBe();
 
   /**
    * Translated "Raffle".
@@ -59,4 +95,31 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   @DefaultMessage("Raffle")
   @Key("raffle")
   String raffle();
+
+  /**
+   * Translated "User is not valid.".
+   * 
+   * @return translated "User is not valid."
+   */
+  @DefaultMessage("User is not valid.")
+  @Key("userIsNotValid")
+  String userIsNotValid();
+
+  /**
+   * Translated "User name cannot be empty.".
+   * 
+   * @return translated "User name cannot be empty."
+   */
+  @DefaultMessage("User name cannot be empty.")
+  @Key("userNameCannotBeEmpty")
+  String userNameCannotBeEmpty();
+
+  /**
+   * Translated "User password cannot be empty.".
+   * 
+   * @return translated "User password cannot be empty."
+   */
+  @DefaultMessage("User password cannot be empty.")
+  @Key("userPasswordCannotBeEmpty")
+  String userPasswordCannotBeEmpty();
 }

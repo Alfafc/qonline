@@ -23,41 +23,40 @@ public class RaffleController extends RaffleView {
 		panel.add(getIdTextBox());
 		panel.add(GUIFactory.createLabel(messages.name()));
 		panel.add(getNameTextBox());
-		panel.add(GUIFactory.createLabel(messages.percentageProfit()));
-		panel.add(getPercentageProfitTextBox());
+		panel.add(GUIFactory.createLabel(messages.profitPercentage()));
+		panel.add(getProfitPercentageTextBox());
 		panel.add(GUIFactory.createLines(2));
 		panel.add(getCreateRaffleButton());
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		
+
 		dialogBox.add(panel);
 
 		getCreateRaffleButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 
-				
 				final Raffle raffle = new Raffle();
 				bindEntityToControls(raffle);
-				
+
 				try {
 					raffle.validate();
 				} catch (final NotValidEntityException e) {
-					
+
 					return;
 				}
-				
+
 				final AsyncCallback<VOID> callback = new AsyncCallback<VOID>() {
-					
+
 					public void onFailure(Throwable caught) {
 						com.google.gwt.user.client.Window.alert("Create failure with " + caught.getMessage());
 					}
-					
+
 					public void onSuccess(VOID result) {
-						com.google.gwt.user.client.Window.alert("Create succes with " + result.a);
+						com.google.gwt.user.client.Window.alert("Create successfuly");
 					}
-					
+
 				};
-				
+
 				getRaffleService().createRaffle(raffle, callback);
 			}
 		});

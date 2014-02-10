@@ -20,7 +20,7 @@ public class RaffleDAO extends GenericDAO<Raffle> {
 	private Raffle getFakeRaffle(final String id) {
 		final Raffle raffle = new Raffle();
 		raffle.setName("Name");
-		raffle.setPercentageProfit(10f);
+		raffle.setProfitPercentage(10f);
 		return raffle;
 	}
 
