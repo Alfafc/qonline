@@ -1,68 +1,77 @@
 package com.alfascompany.qonline.gwt.client;
 
+import com.alfascompany.persistence.NotValidEntityException;
 import com.alfascompany.qonline.bean.Raffle;
-import com.alfascompany.ui.AbstractEntityView;
+import com.alfascompany.qonline.bean.VOID;
+import com.alfascompany.ui.AppStrings;
 import com.alfascompany.utils.GUIFactory;
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
-public abstract class RaffleView extends AbstractEntityView<Raffle> {
+public class RaffleView extends RaffleAbstractView<VerticalPanel> {
 
-	private TextBox idTextBox;
-	private TextBox nameTextBox;
-	private TextBox profitPercentageTextBox;
 	private Button createRaffleButton;
 
-	private final RaffleServiceAsync raffleService = GWT.create(RaffleService.class);
-
-	public RaffleServiceAsync getRaffleService() {
-		return raffleService;
+	public RaffleView() {
+		super(new VerticalPanel());
 	}
 
 	@Override
-	public String getTitle() {
-		return messages.raffle();
-	}
+	protected void addControlsToContainer(final VerticalPanel container) {
 
-	@Override
-	protected void bindControlsToEntity(final Raffle entity) {
+		getIdTextBox().setFocus(true);
+		getIdTextBox().selectAll();
 
-		entity.setName(getIdTextBox().getText());
-		entity.setProfitPercentage(Long.valueOf(getProfitPercentageTextBox().getText()));
-	}
-
-	@Override
-	protected void bindEntityToControls(final Raffle entity) {
-		getIdTextBox().setText(entity.getId());
-		getNameTextBox().setText(entity.getName());
-		getProfitPercentageTextBox().setText(entity.getProfitPercentage() + "%");
+		container.add(GUIFactory.createLabel(AppStrings.messages.id()));
+		container.add(getIdTextBox());
+		container.add(GUIFactory.createLabel(AppStrings.messages.name()));
+		container.add(getNameTextBox());
+		container.add(GUIFactory.createLabel(AppStrings.messages.profitPercentage()));
+		container.add(getProfitPercentageTextBox());
+		container.add(GUIFactory.createLines(2));
+		container.add(getCreateRaffleButton());
+		container.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 	}
 
 	public Button getCreateRaffleButton() {
-		if (createRaffleButton == null)
-			createRaffleButton = GUIFactory.createButton(messages.createRaffle());
+		if (createRaffleButton == null) {
+			createRaffleButton = GUIFactory.createButton(AppStrings.messages.createRaffle());
+			createRaffleButton.addClickHandler(new ClickHandler() {
+
+				public void onClick(final ClickEvent event) {
+					createRaffle();
+				}
+			});
+		}
 		return createRaffleButton;
 	}
 
-	public TextBox getProfitPercentageTextBox() {
+	private void createRaffle() {
 
-		if (profitPercentageTextBox == null)
-			profitPercentageTextBox = GUIFactory.createTextBox(messages.profitPercentage());
-		return profitPercentageTextBox;
-	}
+		final Raffle raffle = new Raffle();
+		bindEntityToControls(raffle);
 
-	public TextBox getIdTextBox() {
+		try {
+			raffle.validate();
+		} catch (final NotValidEntityException e) {
+			com.google.gwt.user.client.Window.alert("(Client side) Create failure with " + e.getMessage());
+			return;
+		}
 
-		if (idTextBox == null)
-			idTextBox = GUIFactory.createTextBox(messages.id());
-		return idTextBox;
-	}
+		final AsyncCallback<VOID> callback = new AsyncCallback<VOID>() {
 
-	public TextBox getNameTextBox() {
+			public void onFailure(Throwable caught) {
+				com.google.gwt.user.client.Window.alert("(Server side) Create failure with " + caught.getMessage());
+			}
 
-		if (nameTextBox == null)
-			nameTextBox = GUIFactory.createTextBox(messages.name());
-		return nameTextBox;
+			public void onSuccess(VOID result) {
+				com.google.gwt.user.client.Window.alert("(Server side) Create successfuly");
+			}
+		};
+
+		getRaffleService().createRaffle(raffle, callback);
 	}
 }

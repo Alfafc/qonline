@@ -1,5 +1,7 @@
 package com.alfascompany.qonline.gwt.server;
 
+import java.util.List;
+
 import com.alfascompany.qonline.bean.Raffle;
 import com.alfascompany.qonline.bean.VOID;
 import com.alfascompany.qonline.gwt.client.RaffleService;
@@ -25,6 +27,11 @@ public class RaffleServiceImpl extends RemoteServiceServlet implements RaffleSer
 	public Raffle getRaffle(final String id) {
 
 		return dao.getById(id);
+	}
+
+	public List<Raffle> getRaffles() {
+		
+		return dao.getRaffles();
 	}
 
 }

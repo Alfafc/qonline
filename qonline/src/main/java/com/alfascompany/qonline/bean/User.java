@@ -32,9 +32,9 @@ public class User extends PersistenceEntity<User> implements Serializable {
 
 	@Override
 	public void validate() throws NotValidEntityException {
-		if (StringUtils.isNull(name))
+		if (StringUtils.isNullOrEmpty(name))
 			throw new NotValidEntityException(AppStrings.messages.userNameCannotBeEmpty());
-		if (StringUtils.isNull(name))
+		if (StringUtils.isNullOrEmpty(name))
 			throw new NotValidEntityException(AppStrings.messages.userPasswordCannotBeEmpty());
 	}
 }

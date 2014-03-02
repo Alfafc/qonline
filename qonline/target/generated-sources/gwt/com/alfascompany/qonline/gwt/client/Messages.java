@@ -97,6 +97,15 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String raffle();
 
   /**
+   * Translated "Raffle list".
+   * 
+   * @return translated "Raffle list"
+   */
+  @DefaultMessage("Raffle list")
+  @Key("raffleList")
+  String raffleList();
+
+  /**
    * Translated "User is not valid.".
    * 
    * @return translated "User is not valid."

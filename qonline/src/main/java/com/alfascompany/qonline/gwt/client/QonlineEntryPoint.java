@@ -13,17 +13,24 @@ public class QonlineEntryPoint implements EntryPoint {
 
 	public void onModuleLoad() {
 
-		final RaffleController raffleController = new RaffleController();
+		final RaffleView raffleController = new RaffleView();
+		final RaffleList raffleList = new RaffleList();
+
 		final MenuBar menu = GUIFactory.createMenu();
+		RootPanel.get().add(menu);
 
 		GUIFactory.createMenuItem(menu, messages.createRaffle(), new ScheduledCommand() {
 
 			public void execute() {
-				raffleController.getViewContainer().show();
+				raffleController.showDialog();
 			}
 		});
 
-		RootPanel.get().add(menu);
-	}
+		GUIFactory.createMenuItem(menu, messages.raffleList(), new ScheduledCommand() {
 
+			public void execute() {
+				raffleList.showDialog();
+			}
+		});
+	}
 }

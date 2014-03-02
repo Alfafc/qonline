@@ -1,8 +1,10 @@
 package com.alfascompany.qonline.gwt.client;
 
+import java.util.List;
+
+import com.alfascompany.qonline.bean.Raffle;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public interface RaffleServiceAsync
 {
@@ -42,4 +44,7 @@ public interface RaffleServiceAsync
             // Utility class should not be instanciated
         }
     }
+
+
+	void getRaffles(AsyncCallback<List<Raffle>> callback);
 }

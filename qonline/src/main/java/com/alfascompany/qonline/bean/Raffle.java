@@ -58,9 +58,9 @@ public class Raffle extends PersistenceEntity<Raffle> implements Serializable {
 
 	public void validate() throws NotValidEntityException {
 
-		if (StringUtils.isNull(userId))
+		if (StringUtils.isNullOrEmpty(userId))
 			throw new NotValidEntityException(AppStrings.messages.userIsNotValid());
-		if (StringUtils.isNull(name))
+		if (StringUtils.isNullOrEmpty(name))
 			throw new NotValidEntityException(AppStrings.messages.nameCannotBeEmpty());
 		if (profitPercentage <= 0 || profitPercentage > 50)
 			throw new NotValidEntityException(AppStrings.messages.profitPercentageMustBe());

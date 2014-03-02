@@ -1,29 +1,33 @@
 package com.alfascompany.ui;
 
-import com.alfascompany.qonline.gwt.client.Messages;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Panel;
 
-public abstract class AbstractView {
+public abstract class AbstractView<ContainerType extends Panel> {
 
-	protected final Messages messages = GWT.create(Messages.class);
-	private DialogBox dialogBox;
+	private ContainerType container;
 
-	public DialogBox getViewContainer() {
-		if (dialogBox == null) {
+	public AbstractView(final ContainerType container) {
 
-			dialogBox = new DialogBox(true);
-			dialogBox.setText(getTitle());
-			dialogBox.setAnimationEnabled(true);
-			dialogBox.setModal(true);
-			dialogBox.center();
-
-			getViewContainerImpl(dialogBox);
-		}
-		return dialogBox;
+		this.container = container;
+		addControlsToContainer(container);
 	}
 
 	public abstract String getTitle();
-	
-	protected abstract void getViewContainerImpl(final DialogBox dialogBox);
+
+	protected abstract void addControlsToContainer(final ContainerType container);
+
+	public void showDialog() {
+		
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setAutoHideEnabled(true);
+		dialogBox.setText(getTitle());
+		dialogBox.setAnimationEnabled(true);
+		dialogBox.setModal(true);
+		dialogBox.center();
+
+		dialogBox.add(this.container);
+		
+		dialogBox.show();
+	}
 }

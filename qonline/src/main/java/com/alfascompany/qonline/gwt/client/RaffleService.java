@@ -1,5 +1,7 @@
 package com.alfascompany.qonline.gwt.client;
 
+import java.util.List;
+
 import com.alfascompany.qonline.bean.Raffle;
 import com.alfascompany.qonline.bean.VOID;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -12,4 +14,5 @@ public interface RaffleService extends RemoteService {
 
 	Raffle getRaffle(final String id);
 
+	List<Raffle> getRaffles();
 }

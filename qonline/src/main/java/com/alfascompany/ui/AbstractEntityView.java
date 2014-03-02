@@ -1,8 +1,14 @@
 package com.alfascompany.ui;
 
-public abstract class AbstractEntityView<T> extends AbstractView {
+import com.google.gwt.user.client.ui.Panel;
 
-	protected abstract void bindEntityToControls(T entity);
+public abstract class AbstractEntityView<EntityType, ContainerType extends Panel> extends AbstractView<ContainerType> {
 
-	protected abstract void bindControlsToEntity(T entity);
+	public AbstractEntityView(final ContainerType container) {
+		super(container);
+	}
+
+	protected abstract void bindEntityToControls(final EntityType entity);
+
+	protected abstract void bindControlsToEntity(final EntityType entity);
 }
