@@ -1,5 +1,5 @@
 package com.alfascompany.persistence;
 
-public class AbstractDAO {
+public abstract class AbstractDAO {
 
 }

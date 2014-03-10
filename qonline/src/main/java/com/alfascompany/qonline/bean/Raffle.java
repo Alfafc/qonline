@@ -3,30 +3,21 @@ package com.alfascompany.qonline.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.alfascompany.persistence.AbstractEntity;
 import com.alfascompany.persistence.NotValidEntityException;
-import com.alfascompany.persistence.PersistenceEntity;
 import com.alfascompany.ui.AppStrings;
 import com.alfascompany.utils.StringUtils;
 import com.alfascompany.utils.TimeUtils;
 
-public class Raffle extends PersistenceEntity<Raffle> implements Serializable {
+public class Raffle extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 2322369226395615347L;
 
 	private static final int QONLINE_PERCETANGE_PROFIT = 5;
 
-	private String userId;
 	private String name;
 	private float profitPercentage;
 	private Date endDate;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
 
 	public String getName() {
 		return name;
@@ -56,10 +47,9 @@ public class Raffle extends PersistenceEntity<Raffle> implements Serializable {
 		this.endDate = endDate;
 	}
 
+	@Override
 	public void validate() throws NotValidEntityException {
 
-		if (StringUtils.isNullOrEmpty(userId))
-			throw new NotValidEntityException(AppStrings.messages.userIsNotValid());
 		if (StringUtils.isNullOrEmpty(name))
 			throw new NotValidEntityException(AppStrings.messages.nameCannotBeEmpty());
 		if (profitPercentage <= 0 || profitPercentage > 50)
@@ -67,4 +57,5 @@ public class Raffle extends PersistenceEntity<Raffle> implements Serializable {
 		if (!TimeUtils.between(endDate, 10, 40))
 			throw new NotValidEntityException(AppStrings.messages.endDateMustBe());
 	}
+
 }

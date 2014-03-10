@@ -2,12 +2,12 @@ package com.alfascompany.qonline.bean;
 
 import java.io.Serializable;
 
+import com.alfascompany.persistence.AbstractEntity;
 import com.alfascompany.persistence.NotValidEntityException;
-import com.alfascompany.persistence.PersistenceEntity;
 import com.alfascompany.ui.AppStrings;
 import com.alfascompany.utils.StringUtils;
 
-public class User extends PersistenceEntity<User> implements Serializable {
+public class User extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 5435777658240099076L;
 

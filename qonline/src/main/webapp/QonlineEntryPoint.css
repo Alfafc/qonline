@@ -16,3 +16,11 @@ h1 {
 .dialogVPanel {
 	margin: 5px;
 }
+
+body {
+	margin: 10px;
+}
+
+.centered {
+	margin: auto;
+}

@@ -9,7 +9,7 @@
   
   <servlet>
     <servlet-name>raffleServlet</servlet-name>
-    <servlet-class>com.alfascompany.qonline.gwt.server.RaffleServiceImpl</servlet-class>
+    <servlet-class>com.alfascompany.qonline.services.RaffleServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>

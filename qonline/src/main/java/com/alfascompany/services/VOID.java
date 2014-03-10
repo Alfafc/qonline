@@ -1,4 +1,4 @@
-package com.alfascompany.qonline.bean;
+package com.alfascompany.services;
 
 import java.io.Serializable;
 

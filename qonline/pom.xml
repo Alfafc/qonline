@@ -16,9 +16,30 @@
 		<!-- GWT needs at least java 1.5 -->
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<appengine.target.version>1.9.0</appengine.target.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- GAE -->
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.target.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- GWT -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -31,12 +52,41 @@
 			<version>${gwtVersion}</version>
 			<scope>provided</scope>
 		</dependency>
+
+
+		<!-- Test GAE Dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${appengine.target.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${appengine.target.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JUnit -->
+		<!-- <dependency> -->
+		<!-- <groupId>junit</groupId> -->
+		<!-- <artifactId>junit</artifactId> -->
+		<!-- <version>4.7</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -76,7 +126,7 @@
 				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
 					documentation at codehaus.org -->
 				<configuration>
-					<runTarget>EntryPoint.html</runTarget>
+					<runTarget>QonlineEntryPoint.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<i18nMessagesBundle>com.alfascompany.qonline.gwt.client.Messages</i18nMessagesBundle>
 				</configuration>
@@ -107,6 +157,27 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<!-- GAE Plugin -->
+			<plugin>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>${appengine.target.version}</version>
+				<configuration>
+					<!-- <enableJarClasses>false</enableJarClasses> -->
+					<jvmFlags>
+						<jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>
+					</jvmFlags>
+					<jvmFlags>
+						<jvmFlag>-Dappengine.generated.dir=${basedir}/tmp</jvmFlag>
+					</jvmFlags>
+					<!-- <jvmFlags> -->
+					<!-- <jvmFlag>-Xdebug</jvmFlag> -->
+					<!-- <jvmFlag>-Xrunjdwp:transport=dt_socket,address=8080,server=y,suspend=y</jvmFlag> -->
+					<!-- </jvmFlags> -->
+					<!-- <disableUpdateCheck>true</disableUpdateCheck> -->
 				</configuration>
 			</plugin>
 		</plugins>

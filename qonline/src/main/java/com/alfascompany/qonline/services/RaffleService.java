@@ -1,9 +1,9 @@
-package com.alfascompany.qonline.gwt.client;
+package com.alfascompany.qonline.services;
 
 import java.util.List;
 
 import com.alfascompany.qonline.bean.Raffle;
-import com.alfascompany.qonline.bean.VOID;
+import com.alfascompany.services.VOID;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -12,7 +12,7 @@ public interface RaffleService extends RemoteService {
 
 	VOID createRaffle(final Raffle raffle) throws Exception;
 
-	Raffle getRaffle(final String id);
+	Raffle getRaffle(final String id) throws Exception;
 
-	List<Raffle> getRaffles();
+	List<Raffle> getRaffles() throws Exception;
 }

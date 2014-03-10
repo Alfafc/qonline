@@ -1,35 +1,57 @@
 package com.alfascompany.qonline.gwt.client;
 
-import com.alfascompany.utils.GUIFactory;
+import com.alfascompany.ui.AppStrings;
+import com.alfascompany.ui.GUIFactory;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class QonlineEntryPoint implements EntryPoint {
 
-	private final Messages messages = GWT.create(Messages.class);
+	private RaffleCreateView raffleView;
+	private MyRafflesListView myRafflesListView;
+	private WordWideRafflesListView wordWideRafflesListView;
 
 	public void onModuleLoad() {
 
-		final RaffleView raffleController = new RaffleView();
-		final RaffleList raffleList = new RaffleList();
+		final RootPanel rootPanel = RootPanel.get();
 
 		final MenuBar menu = GUIFactory.createMenu();
-		RootPanel.get().add(menu);
+		rootPanel.add(menu);
 
-		GUIFactory.createMenuItem(menu, messages.createRaffle(), new ScheduledCommand() {
+		final VerticalPanel principalPanel = GUIFactory.createVerticalPanel();
+		principalPanel.addStyleName("centered");
+		rootPanel.add(principalPanel);
+
+		GUIFactory.createMenuItem(menu, AppStrings.messages.createRaffle(), new ScheduledCommand() {
 
 			public void execute() {
-				raffleController.showDialog();
+
+				if (raffleView == null)
+					raffleView = new RaffleCreateView();
+				raffleView.setContentOf(principalPanel);
 			}
 		});
 
-		GUIFactory.createMenuItem(menu, messages.raffleList(), new ScheduledCommand() {
+		GUIFactory.createMenuItem(menu, AppStrings.messages.myRaffles(), new ScheduledCommand() {
 
 			public void execute() {
-				raffleList.showDialog();
+
+				if (myRafflesListView == null)
+					myRafflesListView = new MyRafflesListView();
+				myRafflesListView.setContentOf(principalPanel);
+			}
+		});
+
+		GUIFactory.createMenuItem(menu, AppStrings.messages.wordWideRaffles(), new ScheduledCommand() {
+
+			public void execute() {
+
+				if (wordWideRafflesListView == null)
+					wordWideRafflesListView = new WordWideRafflesListView();
+				wordWideRafflesListView.setContentOf(principalPanel);
 			}
 		});
 	}

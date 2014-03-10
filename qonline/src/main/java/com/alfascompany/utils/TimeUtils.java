@@ -1,10 +1,11 @@
 package com.alfascompany.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
-import com.alfascompany.persistence.PersistenceEntity;
+import javax.swing.text.DefaultEditorKit.BeepAction;
+
+import com.google.gwt.i18n.shared.DateTimeFormat;
+import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 
 public class TimeUtils {
 
@@ -13,12 +14,11 @@ public class TimeUtils {
 
 	public static String getCurrentTimeString() {
 
-		final StringBuilder strinBuilder = new StringBuilder(PersistenceEntity.DATE_FORMAT.length());
+		final DateTimeFormat dateTimeFormat = new DateTimeFormat(DATE_FORMAT, new DefaultDateTimeFormatInfo()) {
+		};
 
-		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PersistenceEntity.DATE_FORMAT);
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		strinBuilder.append(simpleDateFormat.format(new Date()));
-
+		final StringBuilder strinBuilder = new StringBuilder(DATE_FORMAT.length());
+		strinBuilder.append(dateTimeFormat.format(new Date()));
 		return strinBuilder.toString();
 	}
 
@@ -27,10 +27,27 @@ public class TimeUtils {
 		return TimeUtils.between(date, new Date(), deltaFromDays, DeltaToDays);
 	}
 
-	public static boolean between(final Date date, final Date dateBetween, final int deltaFromDays, final int DeltaToDays) {
+	public static boolean between(final Date date, final Date dateBetween, final int deltaFromDays,
+			final int DeltaToDays) {
 
-		final int days = (int) ((dateBetween.getTime() - date.getTime()) / MILLIS_IN_DAY);
+		if (date == null)
+			throw new IllegalArgumentException("Date cannot be null");
 
+		final int days = (int) ((date.getTime() - dateBetween.getTime()) / MILLIS_IN_DAY);
 		return days >= deltaFromDays && days <= DeltaToDays;
 	}
+
+	public static Date parseDate(final String dateString) {
+
+		return parseDate(dateString, DATE_FORMAT);
+	}
+
+	public static Date parseDate(final String dateString, final String format) {
+
+		final DateTimeFormat dateTimeFormat = new DateTimeFormat(format, new DefaultDateTimeFormatInfo()) {
+		};
+
+		return dateTimeFormat.parse(dateString);
+	}
+
 }

@@ -16,18 +16,16 @@ public abstract class AbstractView<ContainerType extends Panel> {
 	public abstract String getTitle();
 
 	protected abstract void addControlsToContainer(final ContainerType container);
+	
+	public void setContentOf(final Panel panel){
+		panel.clear();
+		panel.add(container);
+	}
 
 	public void showDialog() {
 		
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setAutoHideEnabled(true);
-		dialogBox.setText(getTitle());
-		dialogBox.setAnimationEnabled(true);
-		dialogBox.setModal(true);
-		dialogBox.center();
-
+		final DialogBox dialogBox = GUIFactory.createDialogBox(getTitle(), true);
 		dialogBox.add(this.container);
-		
 		dialogBox.show();
 	}
 }

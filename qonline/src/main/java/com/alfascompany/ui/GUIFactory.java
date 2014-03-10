@@ -1,13 +1,16 @@
-package com.alfascompany.utils;
+package com.alfascompany.ui;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GUIFactory {
@@ -31,6 +34,10 @@ public class GUIFactory {
 		return button;
 	}
 
+	public static EditableLabelWidget createEditableLabelWidget() {
+		return new EditableLabelWidget();
+	}
+
 	public static MenuItem createMenuItem(final MenuBar parentMenu, final String text, final ScheduledCommand command) {
 
 		final MenuItem menuItem = new MenuItem(text, parentMenu);
@@ -38,6 +45,10 @@ public class GUIFactory {
 
 		parentMenu.addItem(menuItem);
 		return menuItem;
+	}
+
+	public static Label createLabel() {
+		return new Label("", true);
 	}
 
 	public static Label createLabel(final String text) {
@@ -55,4 +66,24 @@ public class GUIFactory {
 	public static MenuBar createMenu() {
 		return new MenuBar();
 	}
+
+	public static VerticalPanel createVerticalPanel() {
+		return new VerticalPanel();
+	}
+
+	public static HorizontalPanel createHorizontalPanel() {
+		return new HorizontalPanel();
+	}
+
+	public static DialogBox createDialogBox(final String title, final boolean autoHide) {
+
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setAutoHideEnabled(autoHide);
+		dialogBox.setText(title);
+		dialogBox.setAnimationEnabled(true);
+		dialogBox.setModal(true);
+		dialogBox.center();
+		return dialogBox;
+	}
+
 }

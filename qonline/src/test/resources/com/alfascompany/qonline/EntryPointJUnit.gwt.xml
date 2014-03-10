@@ -4,6 +4,6 @@
   <inherits name='com.alfascompany.qonline.EntryPoint' />
 
   <!-- Specify the path to any remote services.                   -->
-  <servlet path="/EntryPoint/greet" class="com.alfascompany.qonline.server.GreetingServiceImpl" />
+<!--   <servlet path="/EntryPoint/greet" class="com.alfascompany.qonline.server.GreetingServiceImpl" /> -->
 
 </module>

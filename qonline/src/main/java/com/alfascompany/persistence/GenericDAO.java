@@ -1,25 +1,16 @@
 package com.alfascompany.persistence;
 
-import com.alfascompany.proccess.RetryingExecutor;
+import java.util.List;
+import java.util.Map;
 
-public abstract class GenericDAO<T> extends AbstractDAO {
+public abstract class GenericDAO<EntityType extends AbstractEntity> extends AbstractDAO {
 
-	public abstract PersistenceEntity<T> getById(final String id);
+	public abstract EntityType getEntityById(final String id) throws Exception;
 
-	protected abstract void saveImpl(PersistenceEntity<T> entity);
+	public abstract Map<Long, EntityType> getEntities(final List<Long> ids) throws Exception;
 
-	public void save(final PersistenceEntity<T> entity) throws Exception {
+	public abstract Iterable<EntityType> getEntities(final AbstractQuery<EntityType> query) throws Exception;
 
-		entity.validate();
-
-		entity.setLastModifiedDate();
-
-		RetryingExecutor.execute(4, 150, new Runnable() {
-
-			public void run() {
-				saveImpl(entity);
-			}
-		});
-	}
+	public abstract void persist(final EntityType domainEntity) throws Exception;
 
 }
