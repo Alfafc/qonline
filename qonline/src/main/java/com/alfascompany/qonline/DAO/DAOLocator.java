@@ -1,13 +1,14 @@
 package com.alfascompany.qonline.DAO;
 
+import java.io.Serializable;
+
 import com.alfascompany.persistence.AbstractDAOLocator;
-import com.alfascompany.persistence.GAEDAO;
-import com.alfascompany.qonline.bean.Raffle;
-import com.alfascompany.qonline.bean.RaffleDescriptor;
 import com.alfascompany.qonline.bean.User;
 import com.alfascompany.qonline.bean.UserDescriptor;
 
-public class DAOLocator extends AbstractDAOLocator {
+public class DAOLocator extends AbstractDAOLocator implements Serializable {
+
+	private static final long serialVersionUID = 5849221360226406089L;
 
 	private static Object LOCK_OBJECT = new Object();
 	private static AbstractDAOLocator instance;
@@ -26,10 +27,9 @@ public class DAOLocator extends AbstractDAOLocator {
 	}
 
 	@Override
-	protected DAOHolder[] register() {
-		return new DAOHolder[] {
-				new DAOHolder(Raffle.class, GAEDAO.create(new RaffleDescriptor())),
-				new DAOHolder(User.class, GAEDAO.create(new UserDescriptor()))
-		};
+	protected void registerDAOs() {
+
+		registerDAO(RaffleDAO.class, new RaffleDAO());
+		registerGenericDAO(User.class, new UserDescriptor());
 	}
 }

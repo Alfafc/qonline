@@ -9,6 +9,7 @@ public class WordWideRafflesListView extends RaffleListView {
 
 	@Override
 	protected void getRaffles(AsyncCallback<List<Raffle>> asyncCallback) {
+
 		getRaffleService().getRaffles(asyncCallback);
 	}
 

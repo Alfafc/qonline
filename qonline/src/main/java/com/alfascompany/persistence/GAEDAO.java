@@ -1,8 +1,8 @@
 package com.alfascompany.persistence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,10 +13,14 @@ import com.alfascompany.process.RetryingExecutor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Query;
 
-public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
+public class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> implements Serializable {
+
+	private static final long serialVersionUID = 1223334397881621949L;
 
 	private DatastoreService datastoreService;
 	private final AbstractEntityDescriptor<T> entityDescriptor;
@@ -27,20 +31,20 @@ public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
 		return datastoreService;
 	}
 
-	private GAEDAO(final AbstractEntityDescriptor<T> entityDescriptor) {
+	public GAEDAO() {
 
-		this.entityDescriptor = entityDescriptor;
+		this.entityDescriptor = null;
 	}
 
-	public static <EntityType extends AbstractEntity> GAEDAO<EntityType> create(
-			final AbstractEntityDescriptor<EntityType> entityDescriptor) {
-		return new GAEDAO<EntityType>(entityDescriptor);
+	protected GAEDAO(final AbstractEntityDescriptor<T> entityDescriptor) {
+
+		this.entityDescriptor = entityDescriptor;
 	}
 
 	@Override
 	public T getEntityById(final String id) throws Exception {
 
-		final Key key = KeyFactory.createKey(entityDescriptor.getKind(), id);
+		final Key key = KeyFactory.createKey(getEntityDescriptor().getKind(), id);
 		final Entity entity = RetryingExecutor.execute(4, 150, new RetryableFuture<Entity>() {
 
 			private Entity entity;
@@ -82,17 +86,20 @@ public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
 	}
 
 	@Override
-	public Iterable<T> getEntities(final AbstractQuery<T> query) throws Exception {
+	public Iterable<T> getEntities(final AbstractQuery<T> query, final int limit) throws Exception {
 
 		final GAEQuery<T> GAEQuery = (GAEQuery<T>) query;
-		final String kind = entityDescriptor.getKind();
+		final String kind = getEntityDescriptor().getKind();
 
 		final Iterable<Entity> entities = RetryingExecutor.execute(4, 150, new RetryableFuture<Iterable<Entity>>() {
 
 			private Iterable<Entity> entities;
 
 			public void run() throws Exception {
-				this.entities = getDatastoreService().prepare(GAEQuery.buildGAEQuery(kind)).asIterable();
+				final Query buildGAEQuery = GAEQuery.buildGAEQuery(kind);
+
+				final FetchOptions options = FetchOptions.Builder.withLimit(limit);
+				this.entities = getDatastoreService().prepare(buildGAEQuery).asIterable(options);
 			}
 
 			public Iterable<Entity> getValue() {
@@ -100,6 +107,7 @@ public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
 			}
 		});
 
+		System.err.println("Trying to convert to domain entities");
 		return convertToDomainEntitiesIterable(entities);
 	}
 
@@ -123,7 +131,7 @@ public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
 	private List<Key> buildKeys(final List<Long> ids) {
 
 		final List<Key> keys = new ArrayList<Key>(ids.size());
-		final String kind = entityDescriptor.getKind();
+		final String kind = getEntityDescriptor().getKind();
 		for (final Long id : ids) {
 			keys.add(KeyFactory.createKey(kind, id));
 		}
@@ -132,47 +140,31 @@ public final class GAEDAO<T extends AbstractEntity> extends GenericDAO<T> {
 
 	private Entity convertToGAEEntity(final T domainEntity) {
 
-		final Entity entity = new Entity(entityDescriptor.getKind());
+		final Entity entity = new Entity(getEntityDescriptor().getKind());
 
-		for (final Property property : entityDescriptor.getEntityProperties()) {
+		for (final Property property : getEntityDescriptor().getEntityProperties()) {
 			entity.setProperty(property.getKey(), property.getValue(domainEntity));
 		}
 		return entity;
 	}
 
-	private T convertToDomainEntity(final Entity entity) {
+	//TODO: sacar
+	public T convertToDomainEntity(final Entity entity) {
 
-		final T domainEntity = entityDescriptor.getNewDomainEntityInstance();
+		final T domainEntity = getEntityDescriptor().getNewDomainEntityInstance();
 
-		for (final Property property : entityDescriptor.getEntityProperties()) {
+		for (final Property property : getEntityDescriptor().getEntityProperties()) {
 			property.setValue(domainEntity, entity.getProperty(property.getKey()));
 		}
 		return domainEntity;
 	}
 
-	private Iterable<T> convertToDomainEntitiesIterable(final Iterable<Entity> entities) {
+	private IterableSerializable<T> convertToDomainEntitiesIterable(final Iterable<Entity> entities) {
 
-		final Iterator<Entity> iterator = entities.iterator();
+		return new IterableSerializable<T>(entities.iterator(), this);
+	}
 
-		return new Iterable<T>() {
-
-			public Iterator<T> iterator() {
-
-				return new Iterator<T>() {
-
-					public boolean hasNext() {
-						return iterator.hasNext();
-					}
-
-					public T next() {
-						return convertToDomainEntity(iterator.next());
-					}
-
-					public void remove() {
-						iterator.remove();
-					}
-				};
-			}
-		};
+	public AbstractEntityDescriptor<T> getEntityDescriptor() {
+		return entityDescriptor;
 	}
 }

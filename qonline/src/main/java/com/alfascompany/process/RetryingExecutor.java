@@ -28,7 +28,7 @@ public class RetryingExecutor {
 			if (maxRetryingTimes == retryingTimes++) {
 				throw new Exception("No more execution retries! Exception is [" + e.getMessage() + "]");
 			}
-			Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
+			Logger.getAnonymousLogger().log(Level.WARNING, e + " - " + e.getMessage() + " - " + e.getStackTrace());
 			sleep(increasingTimeBetween * retryingTimes);
 			executeImpl(maxRetryingTimes, retryingTimes, increasingTimeBetween, runnable);
 		}

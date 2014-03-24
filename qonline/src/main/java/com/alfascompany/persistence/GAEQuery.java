@@ -16,15 +16,13 @@ public class GAEQuery<EntityType extends AbstractEntity> extends AbstractQuery<E
 	}
 
 	public static <EntityType2 extends AbstractEntity, PropertyType> GAEQuery<EntityType2> create(
-			final GenericProperty<EntityType2, PropertyType> property, final Operator operator, final PropertyType value)
-			throws Exception {
+			final Property property, final Operator operator, final PropertyType value) throws Exception {
 
 		return new GAEQuery<EntityType2>(createFilter(property, operator, value));
 	}
 
-	private static <EntityType2 extends AbstractEntity, PropertyType> Filter createFilter(
-			final GenericProperty<EntityType2, PropertyType> property, final Operator operator, final PropertyType value)
-			throws Exception {
+	private static <EntityType2 extends AbstractEntity, PropertyType> Filter createFilter(final Property property,
+			final Operator operator, final PropertyType value) throws Exception {
 
 		return new FilterPredicate(property.getKey(), toFilterOperator(operator), value);
 	}

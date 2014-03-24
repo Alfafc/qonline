@@ -25,11 +25,12 @@ public abstract class RaffleListView extends RaffleAbstractView<VerticalPanel> {
 
 			public void onSuccess(final List<Raffle> raffles) {
 
+				Window.alert("(Server side) Getting raffles succeded [" + raffles.size() + "]");
 				fillGrid(grid, raffles);
 			}
 
 			public void onFailure(final Throwable caught) {
-				Window.alert("(Server side) Getting raffles failed");
+				Window.alert("(Server side) Getting raffles failed [" + caught + "]");
 			}
 		});
 		container.add(grid);
@@ -40,11 +41,11 @@ public abstract class RaffleListView extends RaffleAbstractView<VerticalPanel> {
 	private Grid getGrid() {
 
 		if (grid == null)
-			grid = new Grid(5, 5);
+			grid = new Grid();
 		return grid;
 	}
 
-	private void fillGrid(final Grid grid, final List<Raffle> raffles) {
+	private void fillGrid(final Grid grid, final Iterable<Raffle> raffles) {
 		int rowIndex = 0;
 		int columnIndex;
 		for (final Raffle raffle : raffles) {
@@ -52,7 +53,8 @@ public abstract class RaffleListView extends RaffleAbstractView<VerticalPanel> {
 			raffleView.bindEntityToControls(raffle);
 
 			columnIndex = 0;
-			grid.setWidget(rowIndex, columnIndex, raffleView.getIdTextBox());
+			grid.resize(rowIndex + 1, 3);
+			grid.setWidget(rowIndex, columnIndex++, raffleView.getKeyTextBox());
 			grid.setWidget(rowIndex, columnIndex++, raffleView.getNameTextBox());
 			grid.setWidget(rowIndex, columnIndex++, raffleView.getProfitPercentageTextBox());
 			rowIndex++;

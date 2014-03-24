@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("raffle")
 public interface RaffleService extends RemoteService {
 
-	VOID createRaffle(final Raffle raffle) throws Exception;
+	VOID persistRaffle(final Raffle raffle) throws Exception;
 
 	Raffle getRaffle(final String id) throws Exception;
 

@@ -9,7 +9,8 @@ public abstract class GenericDAO<EntityType extends AbstractEntity> extends Abst
 
 	public abstract Map<Long, EntityType> getEntities(final List<Long> ids) throws Exception;
 
-	public abstract Iterable<EntityType> getEntities(final AbstractQuery<EntityType> query) throws Exception;
+	public abstract Iterable<EntityType> getEntities(final AbstractQuery<EntityType> query, final int limit)
+			throws Exception;
 
 	public abstract void persist(final EntityType domainEntity) throws Exception;
 

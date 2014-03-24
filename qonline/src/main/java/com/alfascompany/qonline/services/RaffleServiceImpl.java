@@ -1,10 +1,11 @@
 package com.alfascompany.qonline.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import com.alfascompany.persistence.GenericDAO;
 import com.alfascompany.qonline.DAO.DAOLocator;
+import com.alfascompany.qonline.DAO.RaffleDAO;
 import com.alfascompany.qonline.bean.Raffle;
 import com.alfascompany.services.VOID;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -12,13 +13,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class RaffleServiceImpl extends RemoteServiceServlet implements RaffleService {
 
 	private static final long serialVersionUID = -4214505413727960522L;
-	private final GenericDAO<Raffle> dao;
+
+	private final RaffleDAO dao;
 
 	public RaffleServiceImpl() {
-		dao = DAOLocator.instance().getDAO(Raffle.class);
+		dao = DAOLocator.instance().getDAO(RaffleDAO.class);
 	}
 
-	public VOID createRaffle(final Raffle raffle) throws Exception {
+	public VOID persistRaffle(final Raffle raffle) throws Exception {
 
 		dao.persist(raffle);
 		return VOID.value;
@@ -32,7 +34,15 @@ public class RaffleServiceImpl extends RemoteServiceServlet implements RaffleSer
 	public List<Raffle> getRaffles() throws Exception {
 
 		// TODO: definir como mierda queremos que funcionen las querys
-		return new ArrayList<Raffle>();
+		// dao.getLastWorldWideRaffles()
+
+		final ArrayList<Raffle> list = new ArrayList<Raffle>();
+		final Iterator<Raffle> iterator = dao.getLastWorldWideRaffles().iterator();
+
+		while (iterator.hasNext())
+			list.add(iterator.next());
+
+		return list;
 	}
 
 }

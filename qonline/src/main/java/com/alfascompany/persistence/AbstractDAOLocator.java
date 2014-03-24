@@ -9,35 +9,31 @@ public abstract class AbstractDAOLocator {
 
 	protected AbstractDAOLocator() {
 
-		for (final DAOHolder DAOHolder : register())
-			DAOsMap.put(DAOHolder.getClassName(), DAOHolder.getInstance());
+		registerDAOs();
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractEntity> GenericDAO<T> getDAO(final Class<T> EntityClass) {
+	public <T extends AbstractEntity> GenericDAO<T> getGenericDAO(final Class<T> entityClass) {
 
-		return (GenericDAO<T>) DAOsMap.get(EntityClass.getName());
+		return (GenericDAO<T>) DAOsMap.get(entityClass.getName());
 	}
 
-	protected abstract DAOHolder[] register();
+	@SuppressWarnings("unchecked")
+	public <T extends AbstractDAO> T getDAO(final Class<T> DAOClass) {
 
-	public class DAOHolder {
+		return (T) DAOsMap.get(DAOClass.getName());
+	}
 
-		private final String className;
-		private final AbstractDAO instance;
+	protected abstract void registerDAOs();
 
-		public String getClassName() {
-			return className;
-		}
+	public <EntityType extends AbstractEntity> void registerGenericDAO(final Class<EntityType> entityClass,
+			final AbstractEntityDescriptor<EntityType> entityDescriptor) {
 
-		public AbstractDAO getInstance() {
-			return instance;
-		}
+		DAOsMap.put(entityClass.getName(), new GAEDAO<EntityType>(entityDescriptor));
+	}
 
-		public <T extends AbstractEntity> DAOHolder(final Class<T> EntityClass, final GenericDAO<T> instance) {
+	public <DAOType extends AbstractDAO> void registerDAO(final Class<DAOType> DAOClass, final DAOType instance) {
 
-			this.className = EntityClass.getName();
-			this.instance = instance;
-		}
+		DAOsMap.put(DAOClass.getName(), instance);
 	}
 }

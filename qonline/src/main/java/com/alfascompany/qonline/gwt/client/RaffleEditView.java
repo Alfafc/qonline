@@ -5,14 +5,11 @@ import com.alfascompany.qonline.bean.Raffle;
 import com.alfascompany.services.VOID;
 import com.alfascompany.ui.AppStrings;
 import com.alfascompany.ui.GUIFactory;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,7 +23,7 @@ public class RaffleEditView extends RaffleView {
 	@Override
 	protected void addControlsToContainer(final VerticalPanel container) {
 
-		container.add(GUIFactory.createLabel(AppStrings.messages.id()));
+		container.add(GUIFactory.createLabel(AppStrings.messages.key()));
 		container.add(getIdLabel());
 		container.add(GUIFactory.createLabel(AppStrings.messages.name()));
 		container.add(getNameLabel());
@@ -36,7 +33,7 @@ public class RaffleEditView extends RaffleView {
 		container.add(GUIFactory.createLines(2));
 		container.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 
-		getProfitPercentageTextBox().setVisible(false);
+//		getProfitPercentageTextBox().setVisible(false);
 
 		container.add(getSaveRaffleButton());
 	}
@@ -61,22 +58,22 @@ public class RaffleEditView extends RaffleView {
 
 		if (profitPercentageLabel == null) {
 			profitPercentageLabel = GUIFactory.createLabel();
-			profitPercentageLabel.addClickListener(new ClickListener() {
-
-				@Deprecated
-				public void onClick(final Widget sender) {
-
-					profitPercentageLabel.setVisible(false);
-					getProfitPercentageTextBox().setVisible(true);
-				}
-			});
-			getProfitPercentageTextBox().addBlurHandler(new BlurHandler() {
-
-				public void onBlur(BlurEvent event) {
-					profitPercentageLabel.setVisible(true);
-					getProfitPercentageTextBox().setVisible(false);
-				}
-			});
+//			profitPercentageLabel.addClickListener(new ClickListener() {
+//
+//				@Deprecated
+//				public void onClick(final Widget sender) {
+//
+//					profitPercentageLabel.setVisible(false);
+//					getProfitPercentageTextBox().setVisible(true);
+//				}
+//			});
+//			getProfitPercentageTextBox().addBlurHandler(new BlurHandler() {
+//
+//				public void onBlur(BlurEvent event) {
+//					profitPercentageLabel.setVisible(true);
+//					getProfitPercentageTextBox().setVisible(false);
+//				}
+//			});
 		}
 		return profitPercentageLabel;
 	}
@@ -102,14 +99,14 @@ public class RaffleEditView extends RaffleView {
 		try {
 			raffle.validate();
 		} catch (final NotValidEntityException e) {
-			Window.alert("(Client side) Save failure with " + e.getMessage());
+			Window.alert("(Client side) Save failure with [" + e + "]");
 			return;
 		}
 
 		final AsyncCallback<VOID> callback = new AsyncCallback<VOID>() {
 
 			public void onFailure(final Throwable caught) {
-				Window.alert("(Server side) Save failure with " + caught.getMessage());
+				Window.alert("(Server side) Save failure with [" + caught + "]");
 			}
 
 			public void onSuccess(final VOID result) {
@@ -117,7 +114,7 @@ public class RaffleEditView extends RaffleView {
 			}
 		};
 
-		getRaffleService().createRaffle(raffle, callback);
+		getRaffleService().persistRaffle(raffle, callback);
 	}
 
 }

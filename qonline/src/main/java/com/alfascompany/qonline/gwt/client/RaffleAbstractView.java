@@ -1,7 +1,5 @@
 package com.alfascompany.qonline.gwt.client;
 
-import java.util.Date;
-
 import com.alfascompany.qonline.bean.Raffle;
 import com.alfascompany.qonline.services.RaffleService;
 import com.alfascompany.qonline.services.RaffleServiceAsync;
@@ -9,14 +7,13 @@ import com.alfascompany.ui.AbstractEntityView;
 import com.alfascompany.ui.AppStrings;
 import com.alfascompany.ui.GUIFactory;
 import com.alfascompany.utils.TimeUtils;
-import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 
 public abstract class RaffleAbstractView<ContainerType extends Panel> extends AbstractEntityView<Raffle, ContainerType> {
 
-	private TextBox idTextBox;
+	private TextBox keyTextBox;
 	private TextBox nameTextBox;
 	private TextBox profitPercentageTextBox;
 	private TextBox endDateTextBox;
@@ -40,31 +37,32 @@ public abstract class RaffleAbstractView<ContainerType extends Panel> extends Ab
 	@Override
 	protected void bindControlsToEntity(final Raffle entity) {
 
-		entity.setName(getIdTextBox().getText());
+		entity.setKey(getKeyTextBox().getText());
+		entity.setName(getKeyTextBox().getText());
 		entity.setProfitPercentage(Long.valueOf(getProfitPercentageTextBox().getText()));
 		entity.setEndDate(TimeUtils.parseDate(getEndDateTextBox().getText()));
 	}
 
 	@Override
 	protected void bindEntityToControls(final Raffle entity) {
-		getIdTextBox().setText(entity.getId().toString());
+		getKeyTextBox().setText(entity.getKey());
 		getNameTextBox().setText(entity.getName());
 		getProfitPercentageTextBox().setText(entity.getProfitPercentage() + "%");
-		getEndDateTextBox().setText(entity.getEndDate().toString());
+		getEndDateTextBox().setText(entity.getEndDateAsString());
 	}
 
 	public TextBox getProfitPercentageTextBox() {
 
 		if (profitPercentageTextBox == null)
-			profitPercentageTextBox = GUIFactory.createTextBox(AppStrings.messages.profitPercentage());
+			profitPercentageTextBox = GUIFactory.createTextBox("12");
 		return profitPercentageTextBox;
 	}
 
-	public TextBox getIdTextBox() {
+	public TextBox getKeyTextBox() {
 
-		if (idTextBox == null)
-			idTextBox = GUIFactory.createTextBox(AppStrings.messages.id());
-		return idTextBox;
+		if (keyTextBox == null)
+			keyTextBox = GUIFactory.createTextBox(AppStrings.messages.key());
+		return keyTextBox;
 	}
 
 	public TextBox getNameTextBox() {
@@ -77,7 +75,7 @@ public abstract class RaffleAbstractView<ContainerType extends Panel> extends Ab
 	public TextBox getEndDateTextBox() {
 
 		if (endDateTextBox == null)
-			endDateTextBox = GUIFactory.createTextBox(AppStrings.messages.endDate());
+			endDateTextBox = GUIFactory.createTextBox("140409202355895");
 		return endDateTextBox;
 	}
 }

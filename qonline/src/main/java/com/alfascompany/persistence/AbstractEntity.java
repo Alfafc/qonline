@@ -1,19 +1,23 @@
 package com.alfascompany.persistence;
 
+import java.io.Serializable;
+
 import com.alfascompany.utils.TimeUtils;
 
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable {
 
-	private Long id;
+	private static final long serialVersionUID = 4041991017243015721L;
+
+	private String key;
 	private String creationDate;
 	private String lastModifiedDate;
 
-	public Long getId() {
-		return id;
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(final Long id) {
-		this.id = id;
+	public void setKey(final String key) {
+		this.key = key;
 	}
 
 	public String getCreationDate() {

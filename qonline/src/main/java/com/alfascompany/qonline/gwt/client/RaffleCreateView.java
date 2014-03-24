@@ -44,14 +44,14 @@ public class RaffleCreateView extends RaffleView {
 		try {
 			raffle.validate();
 		} catch (final NotValidEntityException e) {
-			Window.alert("(Client side) Create failure with " + e.getMessage());
+			Window.alert("(Client side) Create failure with [" + e + "]");
 			return;
 		}
 
 		final AsyncCallback<VOID> callback = new AsyncCallback<VOID>() {
 
 			public void onFailure(Throwable caught) {
-				Window.alert("(Server side) Create failure with " + caught.getMessage());
+				Window.alert("(Server side) Create failure with [" + caught + "]");
 			}
 
 			public void onSuccess(VOID result) {
@@ -59,6 +59,6 @@ public class RaffleCreateView extends RaffleView {
 			}
 		};
 
-		getRaffleService().createRaffle(raffle, callback);
+		getRaffleService().persistRaffle(raffle, callback);
 	}
 }

@@ -2,8 +2,6 @@ package com.alfascompany.utils;
 
 import java.util.Date;
 
-import javax.swing.text.DefaultEditorKit.BeepAction;
-
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 
@@ -12,13 +10,26 @@ public class TimeUtils {
 	public static final String DATE_FORMAT = "yyMMddHHmmssSSS";
 	private static final long MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
 
-	public static String getCurrentTimeString() {
+	public static Date addDays(final Date date, final int daysFromNow) {
 
 		final DateTimeFormat dateTimeFormat = new DateTimeFormat(DATE_FORMAT, new DefaultDateTimeFormatInfo()) {
 		};
 
+		// TODO: terminar esto
+		return date;
+	}
+
+	public static String getCurrentTimeString() {
+
+		return getTimeString(new Date());
+	}
+
+	public static String getTimeString(final Date date) {
+		final DateTimeFormat dateTimeFormat = new DateTimeFormat(DATE_FORMAT, new DefaultDateTimeFormatInfo()) {
+		};
+
 		final StringBuilder strinBuilder = new StringBuilder(DATE_FORMAT.length());
-		strinBuilder.append(dateTimeFormat.format(new Date()));
+		strinBuilder.append(dateTimeFormat.format(date));
 		return strinBuilder.toString();
 	}
 

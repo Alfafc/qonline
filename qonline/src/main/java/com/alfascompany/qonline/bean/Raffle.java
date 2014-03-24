@@ -16,7 +16,7 @@ public class Raffle extends AbstractEntity implements Serializable {
 	private static final int QONLINE_PERCETANGE_PROFIT = 5;
 
 	private String name;
-	private float profitPercentage;
+	private double profitPercentage;
 	private Date endDate;
 
 	public String getName() {
@@ -27,20 +27,24 @@ public class Raffle extends AbstractEntity implements Serializable {
 		this.name = name;
 	}
 
-	public float getProfitPercentage() {
+	public double getProfitPercentage() {
 		return profitPercentage;
 	}
 
-	public void setProfitPercentage(final float profitPercentage) {
+	public void setProfitPercentage(final double profitPercentage) {
 		this.profitPercentage = profitPercentage;
 	}
 
-	public float getPercentagePrice() {
+	public double getPercentagePrice() {
 		return 100 - profitPercentage - QONLINE_PERCETANGE_PROFIT;
 	}
 
 	public Date getEndDate() {
 		return endDate;
+	}
+	
+	public String getEndDateAsString() {
+		return (endDate == null) ? "" : endDate.toString();
 	}
 
 	public void setEndDate(final Date endDate) {

@@ -13,11 +13,11 @@ public class RaffleView extends RaffleAbstractView<VerticalPanel> {
 	@Override
 	protected void addControlsToContainer(final VerticalPanel container) {
 	
-		getIdTextBox().setFocus(true);
-		getIdTextBox().selectAll();
+		getKeyTextBox().setFocus(true);
+		getKeyTextBox().selectAll();
 	
-		container.add(GUIFactory.createLabel(AppStrings.messages.id()));
-		container.add(getIdTextBox());
+		container.add(GUIFactory.createLabel(AppStrings.messages.key()));
+		container.add(getKeyTextBox());
 		container.add(GUIFactory.createLabel(AppStrings.messages.name()));
 		container.add(getNameTextBox());
 		container.add(GUIFactory.createLabel(AppStrings.messages.profitPercentage()));
